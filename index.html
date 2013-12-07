@@ -95,8 +95,9 @@
     				object.translateX(-49);
     				object.translateY(17);
     				//object.rotateZ(.3);
-                    pawn1 = object;
-					chess.add( pawn1 );
+    				object.pos = "a2";
+                    wpawn1 = object;
+					chess.add( wpawn1 );
                 } );
 				
                 var loader3 = new THREE.OBJMTLLoader();
@@ -107,8 +108,9 @@
     				object.translateX(-9);
     				object.translateY(17);
     				//object.rotateZ(.3);
-                    pawn2 = object;
-					chess.add( pawn2 );
+    				object.pos = "b2";
+                    wpawn2 = object;
+					chess.add( wpawn2 );
                 } );
 				
 				var loader4 = new THREE.OBJMTLLoader();
@@ -119,8 +121,9 @@
     				object.translateX(31);
     				object.translateY(17);
     				//object.rotateZ(.3);
-                    pawn3 = object;
-					chess.add( pawn3 );
+    				object.pos = "c2";
+                    wpawn3 = object;
+					chess.add( wpawn3 );
                 } );
 				
 				var loader5 = new THREE.OBJMTLLoader();
@@ -131,8 +134,9 @@
     				object.translateX(72);
     				object.translateY(17);
     				//object.rotateZ(.3);
-                    pawn4 = object;
-					chess.add( pawn4 );
+    				object.pos = "d2";
+                    wpawn4 = object;
+					chess.add( wpawn4 );
                 } );
 				
 				var loader6 = new THREE.OBJMTLLoader();
@@ -143,8 +147,9 @@
     				object.translateX(113);
     				object.translateY(17);
     				//object.rotateZ(.3);
-                    pawn5 = object;
-					chess.add( pawn5 );
+    				object.pos = "e2";
+                    wpawn5 = object;
+					chess.add( wpawn5 );
                 } );
 				
 				var loader7 = new THREE.OBJMTLLoader();
@@ -155,8 +160,9 @@
     				object.translateX(154);
     				object.translateY(17);
     				//object.rotateZ(.3);
-                    pawn6 = object;
-					chess.add( pawn6 );
+    				object.pos = "f2";
+                    wpawn6 = object;
+					chess.add( wpawn6 );
                 } );
 				
 				var loader8 = new THREE.OBJMTLLoader();
@@ -167,8 +173,9 @@
     				object.translateX(195);
     				object.translateY(17);
     				//object.rotateZ(.3);
-                    pawn7 = object;
-					chess.add( pawn7 );
+    				object.pos = "g2";
+                    wpawn7 = object;
+					chess.add( wpawn7 );
                 } );
 				
 				var loader9 = new THREE.OBJMTLLoader();
@@ -179,8 +186,9 @@
     				object.translateX(236);
     				object.translateY(17);
     				//object.rotateZ(.3);
-                    pawn7 = object;
-					chess.add( pawn7 );
+    				object.pos = "h2";
+                    wpawn8 = object;
+					chess.add( wpawn8 );
                 } );
 				
 				var loader10 = new THREE.OBJMTLLoader();
@@ -192,8 +200,9 @@
     				object.translateY(3);
     				object.translateZ(41)
     				//object.rotateZ(.3);
-                    rook1 = object;
-					chess.add( rook1 );
+    				object.pos = "a1";
+                    wrook1 = object;
+					chess.add( wrook1 );
                 } );
 				
 				var loader11 = new THREE.OBJMTLLoader();
@@ -205,8 +214,9 @@
     				object.translateY(3);
     				object.translateZ(41)
     				//object.rotateZ(.3);
-                    rook2 = object;
-					chess.add( rook2 );
+    				object.pos = "h1";
+                    wrook2 = object;
+					chess.add( wrook2 );
                 } );
 				
 				var loader12 = new THREE.OBJMTLLoader();
@@ -218,8 +228,9 @@
     				object.translateY(17);
     				object.translateZ(41)
     				//object.rotateZ(.3);
-                    queen = object;
-					chess.add( queen );
+    				object.pos = "d1";
+                    wqueen = object;
+					chess.add( wqueen );
                 } );
 				
 				var loader13 = new THREE.OBJMTLLoader();
@@ -231,8 +242,9 @@
     				object.translateY(17);
     				object.translateZ(41)
     				//object.rotateZ(.3);
-                    king = object;
-					chess.add( king );
+    				object.pos = "e1";
+                    wking = object;
+					chess.add( wking );
                 } );
                 
                 
@@ -253,6 +265,7 @@
 				document.addEventListener( 'mousemove', onDocumentMouseMove, false );
 				document.addEventListener( 'keyup', onKeyUp, false );
 				document.addEventListener( 'keydown', onKeyDown, false );
+				//document.addEventListener( 'btnGo', prep, false);
 
 				//
 
@@ -300,9 +313,35 @@
 
 			function onKeyDown( event ) {
             
-				camera.position.x += 5;
+				//camera.position.x += 5;
+				
+				//rook1.translateZ(-41);
+				var movestring = "Pa2a4";
+				
+			//	var sourcestring = movestring.substring(0,3);
+			//	var deststring = movestring.substring(3,5);
+				
+			//	var piece = findPiece(sourcestring);
+				
+			//	movePiece(piece, sourcestring, deststring);
+				
+				
             
  
+			}
+			
+			function prep()
+			{
+				var movestring = document.getElementById("inputBox").value;
+				
+				console.log (movestring);
+				
+				var sourcestring = movestring.substring(0,3);
+				var deststring = movestring.substring(3,5);
+				
+				var piece = findPiece(sourcestring);
+				
+				movePiece(piece, sourcestring, deststring);
 			}
 
 			function onDocumentMouseMove( event ) {
@@ -333,8 +372,112 @@
 				renderer.render( scene, camera );
 
 			}
+			
+			//gets the object referenced in the move string
+			function findPiece(string) {
+				
+				var position = string.substring(1,3);
+				var match;
+				
+				//iterate through all pieces
+				for (var i=1;i<chess.children.length;i++)
+					{
+						//if the pieces position matches the string, return it
+						if (chess.children[i].pos == position)
+							{
+								match = chess.children[i];
+								return match;
+							}
+					}
+				return null;
+			}
+			
+			//moves a piece
+			function movePiece(piece, sourcestring, deststring) {
+				
+				//get source and dest
+				var position = sourcestring.substring(1,3);
+				var destination = deststring;
+				
+				//the numbers from the string
+				var num1 = parseInt(sourcestring.substring(2,3));
+				var num2 = parseInt(destination.substring(1,2));
+				
+				//console.log(num1);
+				//console.log(num2);
+				
+				//the letters from the string
+				var letter1 = sourcestring.substring(1,2);
+				var letter2 = deststring.substring(0,1);
+				
+				//the numbers from the letters
+				var letternum1 = letterToNum(letter1);
+				var letternum2 = letterToNum(letter2);
+				
+				
+				//console.log(letternum1);
+				//console.log(letternum2);
+				
+				//compare letters to see if we need to move side to side
+				var sidewaysdistance = letternum2 - letternum1;
+				
+				//compare numbers to see if we need to move forward/back
+				var distancetotravel = num2 - num1;
+				
+				distancetotravel = distancetotravel * -41;
+				
+				sidewaysdistance = sidewaysdistance * 40;
+				
+				//moving forward or back
+				if (sidewaysdistance == 0)
+					{
+						piece.translateZ(distancetotravel);
+						
+						//moving side to side
+					}else if (distancetotravel == 0)
+						{
+							piece.translateX(sidewaysdistance);
+						}else
+							{
+							//diagonally
+							}
+				piece.pos = destination;
+			}
+			
+			//converts a letter into a number
+			function letterToNum(string) {
+			    string = string.toUpperCase();
+			    var letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', sum = 0, i;
+			    for (i = 0; i < string.length; i++) {
+			        sum += Math.pow(letters.length, i) * (letters.indexOf(string.substr(((i + 1) * -1), 1)) + 1);
+			    }
+			    return sum;
+			}
 
 		</script>
+		
+		
+		<div id="wrapper">
+    <div style="position: absolute; left: 10px; top: 10px; width:200px; height:100px;">
+         <textarea name="inputBox"
+                   id  ="inputBox"
+                   rows="1"
+                   cols="20"
+         >Enter a string here</textarea>
+         
+          <input type="button"
+             id = "btnGo"
+             name="btnGo"
+             class="normal_button"
+             value="Submit"
+             tabindex="0"
+             onClick="prep();">
+             
+    </div>
+    
+		</div>
 
+
+		
 	</body>
 </html>
