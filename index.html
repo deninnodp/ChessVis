@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>three.js webgl - loaders - OBJ MTL loader</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+			body {
+				font-family: Monospace;
+				background-color: #333;
+				color: #fff;
+				margin: 0px;
+				overflow: hidden;
+			}
+			#info {
+				color: #fff;
+				position: absolute;
+				top: 10px;
+				width: 100%;
+				text-align: center;
+				z-index: 100;
+				display:block;
+			}
+			#info a, .button { color: #f00; font-weight: bold; text-decoration: underline; cursor: pointer }
+		</style>
+	</head>
+
+	<body>
+
+		<script src="js/Three.js"></script>
+
+		<script src="js/loaders/MTLLoader.js"></script>
+		<script src="js/loaders/OBJLoader.js"></script>
+		<script src="js/loaders/OBJMTLLoader.js"></script>
+
+		<script src="js/Detector.js"></script>
+		<script src="js/stats.min.js"></script>
+
+		<script>
+
+			var container, stats;
+
+			var camera, scene, renderer;
+			var chess, board, pawn1;
+
+			var mouseX = 0, mouseY = 0;
+
+			var windowHalfX = window.innerWidth / 2;
+			var windowHalfY = window.innerHeight / 2;
+
+
+			init();
+			animate();
+
+
+			function init() {
+
+				container = document.createElement( 'div' );
+				document.body.appendChild( container );
+
+				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 2000 );
+				camera.position.z = 400;
+				camera.position.y = 300;
+			//	camera.position.x = 00;
+				
+
+				// scene
+
+				scene = new THREE.Scene();
+
+				var ambient = new THREE.AmbientLight( 0x101010 );
+				scene.add( ambient );
+
+				var directionalLight = new THREE.DirectionalLight( 0xffeedd );
+				directionalLight.position.set( 0.5, 2, 1 ).normalize();
+				scene.add( directionalLight );
+
+				// model
+                chess = new THREE.Object3D();
+
+				var loader = new THREE.OBJMTLLoader();
+				loader.load( 'objects/board.obj', 'objects/board.mtl', function ( object ) {
+    				object.scale.x = 20;
+    				object.scale.y = 20;
+    				object.scale.z = 20;
+                    board = object;
+					chess.add( board );
+                } );
+               
+                var loader2 = new THREE.OBJMTLLoader();
+				loader.load( 'objects/pawn.obj', 'objects/pawn.mtl', function ( object ) {
+    				object.scale.x = 15;
+    				object.scale.y = 15;
+    				object.scale.z = 15;
+    				object.translateX(-49);
+    				object.translateY(17);
+    				//object.rotateZ(.3);
+                    pawn1 = object;
+					chess.add( pawn1 );
+                } );
+				
+                var loader3 = new THREE.OBJMTLLoader();
+				loader.load( 'objects/pawn.obj', 'objects/pawn.mtl', function ( object ) {
+    				object.scale.x = 15;
+    				object.scale.y = 15;
+    				object.scale.z = 15;
+    				object.translateX(-9);
+    				object.translateY(17);
+    				//object.rotateZ(.3);
+                    pawn2 = object;
+					chess.add( pawn2 );
+                } );
+				
+				var loader4 = new THREE.OBJMTLLoader();
+				loader.load( 'objects/pawn.obj', 'objects/pawn.mtl', function ( object ) {
+    				object.scale.x = 15;
+    				object.scale.y = 15;
+    				object.scale.z = 15;
+    				object.translateX(31);
+    				object.translateY(17);
+    				//object.rotateZ(.3);
+                    pawn3 = object;
+					chess.add( pawn3 );
+                } );
+				
+				var loader5 = new THREE.OBJMTLLoader();
+				loader.load( 'objects/pawn.obj', 'objects/pawn.mtl', function ( object ) {
+    				object.scale.x = 15;
+    				object.scale.y = 15;
+    				object.scale.z = 15;
+    				object.translateX(72);
+    				object.translateY(17);
+    				//object.rotateZ(.3);
+                    pawn4 = object;
+					chess.add( pawn4 );
+                } );
+				
+				var loader6 = new THREE.OBJMTLLoader();
+				loader.load( 'objects/pawn.obj', 'objects/pawn.mtl', function ( object ) {
+    				object.scale.x = 15;
+    				object.scale.y = 15;
+    				object.scale.z = 15;
+    				object.translateX(113);
+    				object.translateY(17);
+    				//object.rotateZ(.3);
+                    pawn5 = object;
+					chess.add( pawn5 );
+                } );
+				
+				var loader7 = new THREE.OBJMTLLoader();
+				loader.load( 'objects/pawn.obj', 'objects/pawn.mtl', function ( object ) {
+    				object.scale.x = 15;
+    				object.scale.y = 15;
+    				object.scale.z = 15;
+    				object.translateX(154);
+    				object.translateY(17);
+    				//object.rotateZ(.3);
+                    pawn6 = object;
+					chess.add( pawn6 );
+                } );
+				
+				var loader8 = new THREE.OBJMTLLoader();
+				loader.load( 'objects/pawn.obj', 'objects/pawn.mtl', function ( object ) {
+    				object.scale.x = 15;
+    				object.scale.y = 15;
+    				object.scale.z = 15;
+    				object.translateX(195);
+    				object.translateY(17);
+    				//object.rotateZ(.3);
+                    pawn7 = object;
+					chess.add( pawn7 );
+                } );
+				
+				var loader9 = new THREE.OBJMTLLoader();
+				loader.load( 'objects/pawn.obj', 'objects/pawn.mtl', function ( object ) {
+    				object.scale.x = 15;
+    				object.scale.y = 15;
+    				object.scale.z = 15;
+    				object.translateX(236);
+    				object.translateY(17);
+    				//object.rotateZ(.3);
+                    pawn7 = object;
+					chess.add( pawn7 );
+                } );
+				
+				var loader10 = new THREE.OBJMTLLoader();
+				loader.load( 'objects/rook.obj', 'objects/rook.mtl', function ( object ) {
+    				object.scale.x = 15;
+    				object.scale.y = 15;
+    				object.scale.z = 15;
+    				object.translateX(-41);
+    				object.translateY(3);
+    				object.translateZ(41)
+    				//object.rotateZ(.3);
+                    rook1 = object;
+					chess.add( rook1 );
+                } );
+				
+				var loader11 = new THREE.OBJMTLLoader();
+				loader.load( 'objects/rook.obj', 'objects/rook.mtl', function ( object ) {
+    				object.scale.x = 15;
+    				object.scale.y = 15;
+    				object.scale.z = 15;
+    				object.translateX(241);
+    				object.translateY(3);
+    				object.translateZ(41)
+    				//object.rotateZ(.3);
+                    rook2 = object;
+					chess.add( rook2 );
+                } );
+				
+				var loader12 = new THREE.OBJMTLLoader();
+				loader.load( 'objects/queen.obj', 'objects/queen.mtl', function ( object ) {
+    				object.scale.x = 15;
+    				object.scale.y = 15;
+    				object.scale.z = 15;
+    				object.translateX(80);
+    				object.translateY(17);
+    				object.translateZ(41)
+    				//object.rotateZ(.3);
+                    queen = object;
+					chess.add( queen );
+                } );
+				
+				var loader13 = new THREE.OBJMTLLoader();
+				loader.load( 'objects/king.obj', 'objects/king.mtl', function ( object ) {
+    				object.scale.x = 15;
+    				object.scale.y = 15;
+    				object.scale.z = 15;
+    				object.translateX(121);
+    				object.translateY(17);
+    				object.translateZ(41)
+    				//object.rotateZ(.3);
+                    king = object;
+					chess.add( king );
+                } );
+                
+                
+        
+                
+                
+                /*
+                    TODO Add more chess parts and connect them up to the scene
+                    Note: Be sure to apply whatever transformations are appropriate
+                */
+
+				scene.add( chess );
+
+				renderer = new THREE.WebGLRenderer();
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				container.appendChild( renderer.domElement );
+
+				document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+				document.addEventListener( 'keyup', onKeyUp, false );
+				document.addEventListener( 'keydown', onKeyDown, false );
+
+				//
+
+				window.addEventListener( 'resize', onWindowResize, false );
+
+			}
+
+            function cloneObj ( obj ) {
+                var i, cpy = new THREE.Object3D();
+                for (var i in obj.children) {
+                    cpy.add(
+                        new THREE.Mesh(obj.children[i].geometry)
+                    );
+                }
+                return cpy;
+            }
+
+            function cloneObjMtl ( objmtl ) {
+                var i, cpy = new THREE.Object3D();
+                for (var i in objmtl.children) {
+                    cpy.add(
+                        new THREE.Mesh(objmtl.children[i].geometry,
+                        objmtl.children[i].material)
+                    );
+                }
+                return cpy;
+            }
+
+			function onWindowResize() {
+
+				windowHalfX = window.innerWidth / 2;
+				windowHalfY = window.innerHeight / 2;
+
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+
+				renderer.setSize( window.innerWidth, window.innerHeight );
+
+			}
+
+			function onKeyUp( event ) {
+            
+            
+			}
+
+			function onKeyDown( event ) {
+            
+				camera.position.x += 5;
+            
+ 
+			}
+
+			function onDocumentMouseMove( event ) {
+
+				mouseX = ( event.clientX - windowHalfX ) / 2;
+				mouseY = ( event.clientY - windowHalfY ) / 2;
+
+			}
+
+			//
+
+			function animate() {
+				requestAnimationFrame( animate );
+                /*
+                    TODO Perform updates for animation purposes
+                */
+				render();
+
+			}
+
+			function render() {
+
+				camera.position.x += ( mouseX - camera.position.x ) * .05;
+				camera.position.y += ( - mouseY - camera.position.y ) * .05;
+
+				camera.lookAt( scene.position );
+
+				renderer.render( scene, camera );
+
+			}
+
+		</script>
+
+	</body>
+</html>
